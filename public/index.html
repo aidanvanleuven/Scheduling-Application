@@ -1,0 +1,60 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--CSS-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <title>Skyline Scheduling</title>
+
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <span class="navbar-brand">Skyline Scheduling</span>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse" ng-controller="NavController">
+                <ul class="nav navbar-nav">
+                    <li data-toggle="collapse" data-target="#navbar.in" ng-class="{ active: isActive('/dashboard') }">
+                        <a href="#/dashboard">Dashboard</a>
+                    </li>
+
+                    <li data-toggle="collapse" data-target="#navbar.in" ng-class="{ active: isActive('/masterlist') }">
+                        <a href="#/masterlist">Master List</a>
+                    </li>
+
+                    <li data-toggle="collapse" data-target="#navbar.in" ng-class="{ active: isActive('/users') }">
+                        <a href="#/users">Users</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div ng-view="">
+    </div>
+
+    <!--JavaScript-->
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular-route.js"></script>
+    <script src="js/javascript.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="controllers/controller.js"></script>
+</body>
+
+</html>
