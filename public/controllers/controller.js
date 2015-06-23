@@ -9,7 +9,7 @@ controllers.NavController = function ($scope, $location){
 
 controllers.UserCrudController = function($scope, $http) {
     $scope.refresh = function(){
-        $http.get('/skyline_db').success(function(response){
+        $http.get('/nodejs').success(function(response){
             $scope.users = response;
             $scope.user.username = "";
             $scope.user.firstname = "";
@@ -57,13 +57,13 @@ controllers.UserCrudController = function($scope, $http) {
         }
 
         if (state == "new"){
-                $http.post('/skyline_db', $scope.user).success(function(response){
+                $http.post('/nodejs', $scope.user).success(function(response){
                 $scope.refresh();
             });
         }
 
         if (state == "edit"){
-                $http.put('/skyline_db' , $scope.user).success(function(response){
+                $http.put('/nodejs' , $scope.user).success(function(response){
                 $scope.refresh();
             });
         }
@@ -72,7 +72,7 @@ controllers.UserCrudController = function($scope, $http) {
     $scope.removeUser = function(id, $event){
         $event.preventDefault();
         $event.stopPropagation();
-        $http.delete('/skyline_db/' + id).success(function(response){
+        $http.delete('/nodejs/' + id).success(function(response){
             $scope.refresh();
         });
     };
