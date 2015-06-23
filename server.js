@@ -25,20 +25,20 @@ app.get('/nodejs', function(req, res){
 
 });
 
-app.post('/skyline_db', function(req, res){
+app.post('/nodejs', function(req, res){
     db.users.insert(req.body, function(err, doc){
         res.json(doc);
     });
 });
 
-app.delete('/skyline_db/:id', function(req, res){
+app.delete('/nodejs/:id', function(req, res){
     var id = req.params.id;
     db.users.remove({_id: mongojs.ObjectId(id)}, function(err, doc){
         res.json(doc);
     });
 });
 
-app.put('/skyline_db', function (req, res) {
+app.put('/nodejs', function (req, res) {
     //var id = req.body._id;
     db.users.findAndModify({
         query: {_id: mongojs.ObjectId(req.body._id)},
