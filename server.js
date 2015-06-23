@@ -1,15 +1,23 @@
 var express = require('express');
 var app = express();
 var mongojs = require('mongojs');
-var db = mongojs('skyline_db', ['users']);
+var db = mongojs(connection_string , ['users']);
 var bodyParser = require('body-parser');
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+var connection_string = '127.0.0.1:27017/nodejs';
+if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
+  connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+  process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+  process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+  process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+  process.env.OPENSHIFT_APP_NAME;
+}
 
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 
-app.get('/skyline_db', function(req, res){
+app.get('/nodejs', function(req, res){
     db.users.find(function(err, docs){
         res.json(docs);
     });
