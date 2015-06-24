@@ -4,7 +4,7 @@ var mongojs = require('mongojs');
 var bodyParser = require('body-parser');
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-var connection_string = '127.0.0.1:27017/nodejs';
+var connection_string = 'admin:pSjDFeQTWQ4y@127.0.0.1:27017/nodejs';
 if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
   connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
   process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
@@ -18,29 +18,66 @@ var db = mongojs(connection_string , ['users']);
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 
-app.get('/nodejs', function(req, res){
-    db.users.find(function(err, docs){
+//User CRUD OPs
+
+app.get('/users', function(req, res){
+    db.users.find().sort({username : 1}, function(err, docs){
         res.json(docs);
     });
 
 });
 
-app.post('/nodejs', function(req, res){
+app.post('/users', function(req, res){
     db.users.insert(req.body, function(err, doc){
         res.json(doc);
     });
 });
 
-app.delete('/nodejs/:id', function(req, res){
+app.delete('/users/:id', function(req, res){
     var id = req.params.id;
     db.users.remove({_id: mongojs.ObjectId(id)}, function(err, doc){
         res.json(doc);
     });
 });
 
-app.put('/nodejs', function (req, res) {
+app.put('/users', function (req, res) {
     //var id = req.body._id;
     db.users.findAndModify({
+        query: {_id: mongojs.ObjectId(req.body._id)},
+        update: {$set: {username: req.body.username, firstname: req.body.firstname, password: req.body.password, admin: req.body.admin}},
+        new: true},
+
+        function (err, doc) {
+            res.json(doc);
+        }
+    );
+});
+
+//Classes CRUD OPs
+
+app.get('/classes', function(req, res){
+    db.masterlist.find().sort({lastname : 1}, function(err, docs){
+        res.json(docs);
+    });
+
+});
+
+app.post('/classes', function(req, res){
+    db.masterlist.insert(req.body, function(err, doc){
+        res.json(doc);
+    });
+});
+
+app.delete('/classes/:id', function(req, res){
+    var id = req.params.id;
+    db.masterlist.remove({_id: mongojs.ObjectId(id)}, function(err, doc){
+        res.json(doc);
+    });
+});
+
+app.put('/classes', function (req, res) {
+    //var id = req.body._id;
+    db.masterlist.findAndModify({
         query: {_id: mongojs.ObjectId(req.body._id)},
         update: {$set: {username: req.body.username, firstname: req.body.firstname, password: req.body.password, admin: req.body.admin}},
         new: true},

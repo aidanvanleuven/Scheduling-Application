@@ -8,8 +8,8 @@
     "application",
     "openshift"
   ],
-  "author": "OpenShift <ramr@example.org> (http://www.openshift.com/)",
-  "homepage": "http://www.openshift.com/",
+  "author": "Aidan Vanleuven",
+  "homepage": "http://nodejs-skylineschedule.rhcloud.com",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/openshift/origin-server.git"

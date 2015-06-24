@@ -1,3 +1,65 @@
 <div class="container">
+    <div style="max-height:300px; overflow:auto;" >
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>Teacher:</th>
+                    <th>Class:</th>
+                    <th>Trimester:</th>
+                    <th>Room:</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="class in classes" ng-class="{ 'info' : $index == selected }" ng-click="rowClick($index, class._id)">
+                    <td>{{  }}</td>
+                    <td>{{  }}</td>
+                    <td>{{  }}</td>
+                    <td>{{  }}</td>
+                    <td>
+                        <span class="glyphicon glyphicon-remove" style="cursor:pointer;" ng-click="removeUser(user._id, $event)"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <span class="glyphicon glyphicon-plus" style="cursor:pointer;" ng-click="newClick()"></span>
+    &nbsp;
+    <span class="glyphicon glyphicon-refresh" style="cursor:pointer;" ng-click="refresh()"></span>
+    <br>
+    <br>
+    <form ng-hide="hideForm">
+        <div class="form-group">
+            <label for="firstname">First Name:</label>
+            <input type="text" class="form-control" ng-model="class.firstname">
+        </div>
 
+        <div class="form-group">
+            <label for="lastname">Last Name:</label>
+            <input type="text" class="form-control" ng-model="class.lastname">
+        </div>
+
+        <div class="form-group">
+            <label for="classname">Class Name:</label>
+            <input type="text" class="form-control" ng-model="class.classname">
+        </div>
+
+        <div class="form-group">
+            <label for="trimester">Trimester:</label>
+            <select class="form-control" ng-model="class.trimester" ng-click="click()">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">All</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="room">Room Number:</label>
+            <input type="text" class="form-control" ng-model="class.room">
+        </div>
+        <br>
+        <button class="btn btn-primary" style="float: right;" ng-click="saveClick()">Save</button>
+    </form>
 </div>
