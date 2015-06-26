@@ -6,7 +6,7 @@
   <li>Express APIs</li>
   <li>Angular framework</li>
   <li>Node-based web server</li>
-<ul>
+</ul>
 
 <p>Default Login:</p>
 <p>username: defaultuser</p>
