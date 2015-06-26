@@ -12,7 +12,7 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
   process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
   process.env.OPENSHIFT_APP_NAME;
 }
-var db = mongojs(connection_string , ['users']);
+var db = mongojs(connection_string , ['users', 'masterlist']);
 
 
 app.use(express.static(__dirname + "/public"));
@@ -53,33 +53,41 @@ app.put('/users', function (req, res) {
     );
 });
 
+//Populate Dashboard
+app.get('/data', function(req, res){
+    db.users.count(function(err, doc){
+        res.json(doc);
+    });
+});
+
 //Classes CRUD OPs
 
-app.get('/classes', function(req, res){
-    db.masterlist.find().sort({lastname : 1}, function(err, docs){
+app.get('/masterlist', function(req, res){
+    db.masterlist.find().sort({lastname: 1, classname: 1, trimester: 1}, function(err, docs){
         res.json(docs);
     });
 
 });
 
-app.post('/classes', function(req, res){
+app.post('/masterlist', function(req, res){
     db.masterlist.insert(req.body, function(err, doc){
         res.json(doc);
     });
 });
 
-app.delete('/classes/:id', function(req, res){
+app.delete('/masterlist/:id', function(req, res){
     var id = req.params.id;
     db.masterlist.remove({_id: mongojs.ObjectId(id)}, function(err, doc){
         res.json(doc);
     });
 });
 
-app.put('/classes', function (req, res) {
+app.put('/masterlist', function (req, res) {
     //var id = req.body._id;
     db.masterlist.findAndModify({
         query: {_id: mongojs.ObjectId(req.body._id)},
-        update: {$set: {username: req.body.username, firstname: req.body.firstname, password: req.body.password, admin: req.body.admin}},
+        update: {$set:
+            {firstname: req.body.firstname, lastname: req.body.lastname, classname: req.body.classname, trimester: req.body.trimester, room: req.body.room}},
         new: true},
 
         function (err, doc) {

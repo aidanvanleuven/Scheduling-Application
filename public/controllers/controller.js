@@ -77,9 +77,9 @@ controllers.UserCrudController = function($scope, $http) {
 controllers.ClassCrudController = function($scope, $http){
 
     $scope.refresh = function(){
-        $http.get('/classes').success(function(response){
+        $http.get('/masterlist').success(function(response){
             $scope.classes = response;
-            console.log($scope.classes);
+            //console.log($scope.classes);
             /*$scope.class.username = "";
             $scope.class.firstname = "";
             $scope.class.password = "";*/
@@ -96,38 +96,51 @@ controllers.ClassCrudController = function($scope, $http){
     $scope.hideForm = true;
 
     $scope.rowClick = function(index, id){
-        $scope.user._id = id;
+        $scope.class._id = id;
+        console.log($scope.class);
         $scope.selected = 0;
         $scope.selected = index;
-        $scope.user.username = $scope.users[index].username;
-        $scope.user.firstname = $scope.users[index].firstname;
-        $scope.user.password = $scope.users[index].password;
-        $scope.user.admin = $scope.users[index].admin;
+        $scope.class.firstname = $scope.classes[index].firstname;
+        $scope.class.lastname = $scope.classes[index].lastname;
+        $scope.class.classname = $scope.classes[index].classname;
+        $scope.class.trimester = $scope.classes[index].trimester;
+        $scope.class.room = $scope.classes[index].room;
         $scope.hideForm = false;
         state = "edit";
     };
 
     $scope.newClick = function(){
         $scope.hideForm = false;
-        $scope.user = "";
+        $scope.class = "";
         state = "new";
         $scope.selected = null;
     };
 
     $scope.saveClick = function() {
         console.log(state);
-        if ($scope.user.admin !== true || false){
-            $scope.user.admin = false;
-        }
 
         if (state == "new"){
-                $http.post('/classes', $scope.user).success(function(response){
+            if ($scope.class.trimester == "4"){
+                $scope.class.trimester = 1;
+                $http.post('/masterlist', $scope.class).success(function(){
+                    $scope.class.trimester = 2;
+                    $http.post('/masterlist', $scope.class).success(function(){
+                        $scope.class.trimester = 3;
+                        $http.post('/masterlist', $scope.class).success(function(){
+                            $scope.refresh();
+                        });
+                    });
+                });
+
+                $scope.refresh();
+            } else
+                $http.post('/masterlist', $scope.class).success(function(response){
                 $scope.refresh();
             });
         }
 
         if (state == "edit"){
-                $http.put('/classes' , $scope.user).success(function(response){
+                $http.put('/masterlist' , $scope.class).success(function(response){
                 $scope.refresh();
             });
         }
@@ -136,11 +149,17 @@ controllers.ClassCrudController = function($scope, $http){
     $scope.removeUser = function(id, $event){
         $event.preventDefault();
         $event.stopPropagation();
-        $http.delete('/classes/' + id).success(function(response){
+        $http.delete('/masterlist/' + id).success(function(response){
             $scope.refresh();
         });
     };
 
+};
+
+controllers.DashboardController = function($http, $scope){
+    $http.get('/data').success(function(res){
+        $scope.users.number = res;
+    });
 };
 
 myApp.controller(controllers);
@@ -148,7 +167,7 @@ myApp.controller(controllers);
 myApp.config(function ($routeProvider){
     $routeProvider
     .when('/dashboard', {
-        controller: '' ,
+        controller: 'DashboardController' ,
         templateUrl: 'partials/dashboard.html'
     })
     .when('/masterlist', {

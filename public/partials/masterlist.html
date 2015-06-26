@@ -1,5 +1,5 @@
 <div class="container">
-    <div style="max-height:300px; overflow:auto;" >
+    <div style="height:50%; overflow:auto;" >
         <table class="table table-condensed table-hover">
             <thead>
                 <tr>
@@ -12,12 +12,12 @@
             </thead>
             <tbody>
                 <tr ng-repeat="class in classes" ng-class="{ 'info' : $index == selected }" ng-click="rowClick($index, class._id)">
-                    <td>{{  }}</td>
-                    <td>{{  }}</td>
-                    <td>{{  }}</td>
-                    <td>{{  }}</td>
+                    <td>{{ class.lastname }}, {{ class.firstname }}</td>
+                    <td>{{ class.classname }}</td>
+                    <td>{{ class.trimester }}</td>
+                    <td>{{ class.room }}</td>
                     <td>
-                        <span class="glyphicon glyphicon-remove" style="cursor:pointer;" ng-click="removeUser(user._id, $event)"></span>
+                        <span class="glyphicon glyphicon-remove" style="cursor:pointer;" ng-click="removeUser(class._id, $event)"></span>
                     </td>
                 </tr>
             </tbody>
@@ -29,7 +29,7 @@
     <span class="glyphicon glyphicon-refresh" style="cursor:pointer;" ng-click="refresh()"></span>
     <br>
     <br>
-    <form ng-hide="hideForm">
+    <form ng-hide="hideForm" ng-init="class.init=true">
         <div class="form-group">
             <label for="firstname">First Name:</label>
             <input type="text" class="form-control" ng-model="class.firstname">
@@ -47,7 +47,7 @@
 
         <div class="form-group">
             <label for="trimester">Trimester:</label>
-            <select class="form-control" ng-model="class.trimester" ng-click="click()">
+            <select class="form-control" ng-model="class.trimester">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
