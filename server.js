@@ -4,7 +4,7 @@ var mongojs = require('mongojs');
 var bodyParser = require('body-parser');
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-var connection_string = 'admin:pSjDFeQTWQ4y@127.0.0.1:27017/nodejs';
+var connection_string = 'admin:pSjDFeQTWQ4y@127.0.0.1:27018/nodejs';
 if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
   connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
   process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
