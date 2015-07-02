@@ -1,0 +1,32 @@
+<div id="admindiv">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <span class="navbar-brand">Skyline Scheduling</span>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse" ng-controller="NavController">
+                <ul class="nav navbar-nav">
+                    <li data-toggle="collapse" data-target="#navbar.in" ui-sref-active="active">
+                        <a ui-sref="admin.dashboard">Dashboard</a>
+                    </li>
+
+                    <li data-toggle="collapse" data-target="#navbar.in" ui-sref-active="active">
+                        <a ui-sref="admin.masterlist">Master List</a>
+                    </li>
+
+                    <li data-toggle="collapse" data-target="#navbar.in" ui-sref-active="active">
+                        <a ui-sref="admin.users">Users</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div ui-view>
+    </div>
+</div>

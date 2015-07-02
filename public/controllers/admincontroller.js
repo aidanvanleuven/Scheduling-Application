@@ -1,6 +1,3 @@
-var myApp = angular.module('myApp', ['ngRoute']);
-var controllers = {};
-
 controllers.NavController = function ($scope, $location){
     $scope.isActive = function (viewLocation) {
         return viewLocation === $location.url();
@@ -87,6 +84,12 @@ controllers.ClassCrudController = function($scope, $http){
             $scope.hideForm = true;
             $scope.selected = null;
             //$scope.user = "";
+            if($(window).width() <764){
+                $scope.desktop = false;
+            }
+            else {
+                $scope.desktop = true;
+            }
         });
     };
 
@@ -157,28 +160,36 @@ controllers.ClassCrudController = function($scope, $http){
 };
 
 controllers.DashboardController = function($http, $scope){
-    $http.get('/data').success(function(res){
-        $scope.users.number = res;
-    });
+    var init = function(){
+
+         $http.get('/data/users').success(function(response){
+            $scope.users = response;
+        });
+
+         $http.get('/data/entries').success(function(response){
+            $scope.data = response;
+         });
+    };
+
+    init();
 };
 
-myApp.controller(controllers);
-
-myApp.config(function ($routeProvider){
-    $routeProvider
-    .when('/dashboard', {
+/*myApp.config(function ($stateProvider, $urlRouterProvider){
+    $urlRouterProvider.otherwise("/dashboard");
+    $stateProvider
+    .state('dashboard', {
         controller: 'DashboardController' ,
-        templateUrl: 'partials/dashboard.html'
+        url: "/dashboard",
+        templateUrl: '../partials/admin/dashboard.html'
     })
-    .when('/masterlist', {
+    .state('masterlist', {
         controller: 'ClassCrudController',
-        templateUrl: 'partials/masterlist.html'
+        url: "/masterlist",
+        templateUrl: '../partials/admin/masterlist.html'
     })
-    .when('/users', {
+    .state('users', {
         controller: 'UserCrudController',
-        templateUrl: 'partials/users.html'
-    })
-    .otherwise({
-        redirectTo: 'dashboard'
+        url: "/users",
+        templateUrl: '../partials/admin/users.html'
     });
-});
+});*/

@@ -54,8 +54,14 @@ app.put('/users', function (req, res) {
 });
 
 //Populate Dashboard
-app.get('/data', function(req, res){
+app.get('/data/users', function(req, res){
     db.users.count(function(err, doc){
+        res.json(doc);
+    });
+});
+
+app.get('/data/entries', function(req, res){
+    db.masterlist.count(function(err, doc){
         res.json(doc);
     });
 });

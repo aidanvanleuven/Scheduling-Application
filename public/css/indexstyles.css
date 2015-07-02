@@ -1,0 +1,29 @@
+        html, body {
+            height:100%;
+        }
+
+        #landingdiv {
+            background: url(/images/blurry.jpg) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            width:100%;
+            height:100%;
+            padding-top:30px;
+        }
+
+        h1 {
+            font-family: "Abel", Arial, sans-serif;
+            font-weight: 400;
+            font-size: 40px;
+        }
+
+        /* Override B3 .panel adding a subtly transparent background */
+        .panel {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .margin-base-vertical {
+            margin: 40px 0;
+        }
