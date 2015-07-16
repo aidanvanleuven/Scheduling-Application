@@ -1,13 +1,32 @@
+myApp.factory('factory', ['$http', '$q', function($http, $q){
+    return{
+        users: function(){
+            return $http.get('/users');
+        },
+        data: function(){
+            return $http.get('/masterlist');
+        },
+        dashUsers: function(){
+            return $http.get('/data/users/');
+        },
+        dashEntries: function(){
+            return $http.get('/data/entries');
+        }
+    };
+}]);
+
+
 controllers.NavController = function ($scope, $location){
     $scope.isActive = function (viewLocation) {
         return viewLocation === $location.url();
     };
 };
 
-controllers.UserCrudController = function($scope, $http) {
+controllers.UserCrudController = function($scope, $http, factory) {
     $scope.refresh = function(){
-        $http.get('/users').success(function(response){
+            factory.users().success(function(response){
             $scope.users = response;
+
             $scope.user.username = "";
             $scope.user.firstname = "";
             $scope.user.password = "";
@@ -71,10 +90,10 @@ controllers.UserCrudController = function($scope, $http) {
 
 };
 
-controllers.ClassCrudController = function($scope, $http){
+controllers.ClassCrudController = function($scope, $http, factory){
 
     $scope.refresh = function(){
-        $http.get('/masterlist').success(function(response){
+        factory.data().success(function(response){
             $scope.classes = response;
             //console.log($scope.classes);
             /*$scope.class.username = "";
@@ -100,7 +119,7 @@ controllers.ClassCrudController = function($scope, $http){
 
     $scope.rowClick = function(index, id){
         $scope.class._id = id;
-        console.log($scope.class);
+        //console.log($scope.class);
         $scope.selected = 0;
         $scope.selected = index;
         $scope.class.firstname = $scope.classes[index].firstname;
@@ -159,14 +178,14 @@ controllers.ClassCrudController = function($scope, $http){
 
 };
 
-controllers.DashboardController = function($http, $scope){
+controllers.DashboardController = function($http, $scope, factory){
     var init = function(){
 
-         $http.get('/data/users').success(function(response){
+         factory.dashUsers().success(function(response){
             $scope.users = response;
         });
 
-         $http.get('/data/entries').success(function(response){
+       factory.dashEntries().success(function(response){
             $scope.data = response;
          });
     };

@@ -18,7 +18,7 @@ var db = mongojs(connection_string , ['users', 'masterlist']);
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 
-//User CRUD OPs
+//User CRUD Operations
 
 app.get('/users', function(req, res){
     db.users.find().sort({username : 1}, function(err, docs){
@@ -66,7 +66,7 @@ app.get('/data/entries', function(req, res){
     });
 });
 
-//Classes CRUD OPs
+//Classes CRUD Ooperations
 
 app.get('/masterlist', function(req, res){
     db.masterlist.find().sort({lastname: 1, classname: 1, trimester: 1}, function(err, docs){
