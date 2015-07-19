@@ -1,0 +1,17 @@
+.header {
+    height:200px;
+    background: url(/images/blurry.jpg) no-repeat center center fixed;
+}
+
+#appDiv ul li a {
+    color:white;
+}
+
+#appDiv ul li a:hover{
+    text-decoration:none;
+    color:white;
+}
+
+#appDiv div h1 {
+    color:white;
+}

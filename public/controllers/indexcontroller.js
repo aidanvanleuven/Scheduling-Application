@@ -11,7 +11,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider){
     $urlRouterProvider.when("/admin", "/admin/dashboard");
     $stateProvider
     .state('landing', {
-        controller: "" ,
+        controller: "AuthController" ,
         url: "/landing",
         templateUrl: 'partials/landing.html'
     })
@@ -38,6 +38,6 @@ myApp.config(function ($stateProvider, $urlRouterProvider){
     .state('app', {
         controller: "",
         url: "/app",
-        templateUrl: ''
+        templateUrl: 'partials/app.html'
     });
 });

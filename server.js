@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var mongojs = require('mongojs');
 var bodyParser = require('body-parser');
+var passport = require('passport');
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var connection_string = 'admin:pSjDFeQTWQ4y@127.0.0.1:27018/nodejs';
