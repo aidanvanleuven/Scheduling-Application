@@ -9,6 +9,7 @@ myApp.controller(controllers);
 myApp.config(function ($stateProvider, $urlRouterProvider){
     $urlRouterProvider.otherwise("/landing");
     $urlRouterProvider.when("/admin", "/admin/dashboard");
+    $urlRouterProvider.when("/app", "/app/new");
     $stateProvider
     .state('landing', {
         controller: "AuthController" ,
