@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" id="newScheduleDiv">
     <h1>Create a Schedule</h1>
     <br>
     <table class="table table-condensed table-hover">
@@ -26,7 +26,7 @@
     <form>
         <div class="form-group">
             <label>Teacher:</label>
-            <select class="form-control" ng-options="" ng-model="input.teacher"></select>
+            <select class="form-control" ng-options="teacher.lastname + ', ' + teacher.firstname for teacher in teachers" ng-click="teacherClicked()" ng-model="input.teacher"></select>
         </div>
 
         <div class="form-group">
@@ -52,4 +52,5 @@
             <button class="btn btn-primary" type="button" ng-click="doneClick()">Done</button>
         </div>
     </form>
+    <br>
 </div>

@@ -1,4 +1,5 @@
 var express = require('express');
+var _ = require('underscore');
 var app = express();
 var mongojs = require('mongojs');
 var bodyParser = require('body-parser');
@@ -102,6 +103,18 @@ app.put('/masterlist', function (req, res) {
         }
     );
 });
+
+//App Operations
+
+app.get('/getTeachers', function(req, res){
+    db.masterlist.find({},{firstname:1,lastname:1}, function(err, doc){
+        var uniqueList = _.uniq(doc, function(item, key, firstname){
+            return item.firstname;
+        });
+        res.json(uniqueList);
+    });
+});
+
 
 app.listen(server_port, server_ip_address, function(){
     console.log("Listening on " + server_ip_address + ", port " + server_port);

@@ -12,13 +12,27 @@
     color:white;
 }
 
-#appDiv ul .active, #appDiv ul li :hover{
+#appDiv {
+    padding-right:-15px;
+    float:none;
+}
+
+@media only screen and (min-width : 992px) {
+    #appDiv ul li :hover{
+        padding-bottom: 5px;
+        border-bottom-style: solid;
+        border-bottom-width: 2px;
+        border-bottom-color: #fff;
+    }
+}
+
+#appDiv ul .active {
     padding-bottom: 5px;
     border-bottom-style: solid;
     border-bottom-width: 2px;
     border-bottom-color: #fff;
 }
 
-#appDiv {
-    padding-right: -15px !important;
+#newScheduleDiv {
+    height:auto;
 }
