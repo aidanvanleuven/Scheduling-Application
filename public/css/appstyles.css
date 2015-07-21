@@ -7,11 +7,18 @@
     color:white;
 }
 
-#appDiv ul li a:hover{
+#appDiv ul li a:hover, #appDiv ul li a:active, #appDiv ul li a:visited, #appDiv ul li a:link{
     text-decoration:none;
     color:white;
 }
 
-#appDiv div h1 {
-    color:white;
+#appDiv ul .active, #appDiv ul li :hover{
+    padding-bottom: 5px;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    border-bottom-color: #fff;
+}
+
+#appDiv {
+    padding-right: -15px !important;
 }

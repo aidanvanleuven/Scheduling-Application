@@ -39,5 +39,15 @@ myApp.config(function ($stateProvider, $urlRouterProvider){
         controller: "",
         url: "/app",
         templateUrl: 'partials/app.html'
+    })
+    .state('app.new',{
+        controller: "NewScheduleController",
+        url: "/new",
+        templateUrl:'partials/app/newschedule.html'
+    })
+    .state('app.schedules',{
+        controller: "ScheduleController",
+        url: "/schedules",
+        templateUrl:'partials/app/schedules.html'
     });
 });

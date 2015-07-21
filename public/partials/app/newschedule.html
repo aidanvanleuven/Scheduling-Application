@@ -1,0 +1,55 @@
+<div class="container">
+    <h1>Create a Schedule</h1>
+    <br>
+    <table class="table table-condensed table-hover">
+        <thead>
+            <tr>
+                <th>Teacher:</th>
+                <th>Class:</th>
+                <th>Period:</th>
+                <th>Room:</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <form>
+        <div class="form-group">
+            <label>Teacher:</label>
+            <select class="form-control" ng-options="" ng-model="input.teacher"></select>
+        </div>
+
+        <div class="form-group">
+            <label>Class:</label>
+            <select class="form-control" ng-options="" ng-model="input.class"></select>
+        </div>
+
+        <div class="form-group">
+            <label>Period:</label>
+            <select class="form-control" ng-model="input.trimester">
+               <option>1</option>
+               <option>2</option>
+               <option>3</option>
+               <option>4</option>
+               <option>5</option>
+               <option>6</option>
+            </select>
+        </div>
+        <br>
+        <div class="pull-right">
+            <button class="btn btn-primary" type="submit" ng-click="submitClick()">Submit</button>
+            &nbsp;
+            <button class="btn btn-primary" type="button" ng-click="doneClick()">Done</button>
+        </div>
+    </form>
+</div>
