@@ -192,23 +192,3 @@ controllers.DashboardController = function($http, $scope, factory){
 
     init();
 };
-
-/*myApp.config(function ($stateProvider, $urlRouterProvider){
-    $urlRouterProvider.otherwise("/dashboard");
-    $stateProvider
-    .state('dashboard', {
-        controller: 'DashboardController' ,
-        url: "/dashboard",
-        templateUrl: '../partials/admin/dashboard.html'
-    })
-    .state('masterlist', {
-        controller: 'ClassCrudController',
-        url: "/masterlist",
-        templateUrl: '../partials/admin/masterlist.html'
-    })
-    .state('users', {
-        controller: 'UserCrudController',
-        url: "/users",
-        templateUrl: '../partials/admin/users.html'
-    });
-});*/

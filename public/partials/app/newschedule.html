@@ -12,11 +12,11 @@
         </thead>
 
         <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+            <tr ng-repeat="list in lists | orderBy: list.period">
+                <td>{{ list.teacher }}</td>
+                <td>{{ list.class }}</td>
+                <td>{{ list.period }}</td>
+                <td>{{ list.room }}</td>
             </tr>
         </tbody>
     </table>
@@ -26,18 +26,18 @@
     <form>
         <div class="form-group">
             <label>Teacher:</label>
-            <select class="form-control" ng-options="teacher.lastname + ', ' + teacher.firstname for teacher in teachers" ng-click="teacherClicked()" ng-model="input.teacher"></select>
+            <select class="form-control" ng-disabled="tDisabled" ng-model="input.teacher" ng-options="teacher.lastname + ', ' + teacher.firstname for teacher in teachers" ng-change="teacherClicked()"></select>
         </div>
 
         <div class="form-group">
             <label>Class:</label>
-            <select class="form-control" ng-options="" ng-model="input.class"></select>
+            <select class="form-control" ng-disabled="cDisabled" ng-options="class.classname for class in classes" ng-model="input.class"></select>
         </div>
 
         <div class="form-group">
             <label>Period:</label>
-            <select class="form-control" ng-model="input.trimester">
-               <option>1</option>
+            <select class="form-control" ng-model="input.period">
+               <option selected="selected">1</option>
                <option>2</option>
                <option>3</option>
                <option>4</option>
@@ -49,8 +49,9 @@
         <div class="pull-right">
             <button class="btn btn-primary" type="submit" ng-click="submitClick()">Submit</button>
             &nbsp;
-            <button class="btn btn-primary" type="button" ng-click="doneClick()">Done</button>
+            <button class="btn btn-primary" type="button" ng-hide="hideDone" ng-click="doneClick()">Done</button>
         </div>
+        <br>
     </form>
     <br>
 </div>

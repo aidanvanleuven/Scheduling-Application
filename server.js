@@ -115,6 +115,21 @@ app.get('/getTeachers', function(req, res){
     });
 });
 
+app.post('/getClasses', function(req,res){
+    db.masterlist.find({firstname: req.body.teacher.firstname, lastname:req.body.teacher.lastname, trimester:req.body.trimester},{classname:1}, function(err,doc){
+        var uniqueList = _.uniq(doc, function(item, key, classname){
+            return item.classname;
+        });
+        res.json(uniqueList);
+    });
+});
+
+app.post('/getEntry', function(req,res){
+    db.masterlist.find({firstname: req.body.teacher.firstname, lastname:req.body.teacher.lastname, trimester:req.body.trimester, classname:req.body.class.classname}, function(err,doc){
+        res.json(doc);
+    });
+});
+
 
 app.listen(server_port, server_ip_address, function(){
     console.log("Listening on " + server_ip_address + ", port " + server_port);
