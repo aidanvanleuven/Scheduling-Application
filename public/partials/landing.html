@@ -13,37 +13,38 @@
             <button class="btn btn-primary btn-lg" ng-click="registerClick()">Register</button>
         </form>
 
-        <form ng-if="showLogin">
+        <form ng-show="showLogin">
             <div class="form-group">
                 <label>Username:</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" ng-model="login.username">
             </div>
 
             <div class="form-group">
                 <label>Password:</label>
-                <input type="password" class="form-control">
+                <input type="password" class="form-control" ng-model="login.password">
             </div>
-            <button type="submit" class="btn btn-primary pull-right">Submit</button>
+            <p class="text-danger">{{ error }}</p>
+            <button type="submit" class="btn btn-primary pull-right" ng-click="submitLogin()">Submit</button>
             <br>
         </form>
 
-        <form ng-if="showRegister">
+        <form ng-show="showRegister">
             <div class="form-group">
                 <label>First Name:</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" ng-model="input.firstname">
             </div>
 
             <div class="form-group">
                 <label>Username:</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" ng-model="input.username">
             </div>
 
             <div class="form-group">
             <label>Password:</label>
-            <input type="password" class="form-control">
+            <input type="password" class="form-control" ng-model="input.password">
             </div>
 
-            <button type="submit" class="btn btn-primary pull-right">Register</button>
+            <button type="submit" class="btn btn-primary pull-right" ng-click="submitRegister()">Register</button>
             <br>
         </form>
 

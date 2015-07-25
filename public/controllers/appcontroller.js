@@ -1,6 +1,19 @@
 myApp.factory('AppFactory', function(){
+    var userId;
+
     return{
+
         i: 0,
+
+        storeId: function(_id){
+                userId = _id;
+                return "Success!";
+        },
+
+        getId: function(){
+            return userId;
+        }
+
     };
 });
 
@@ -33,7 +46,6 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $rootSco
     $scope.lists = [];
     $scope.submitClick = function(){
         $http.post('/getEntry', $scope.input).success(function(response){
-            console.log(response);
             var object = {
                 period: $scope.input.period,
                 teacher: response[0].lastname + ", " + response[0].firstname,
@@ -47,5 +59,28 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $rootSco
                 $scope.hideDone=false;
             }
         });
+
+        $scope.doneClick = function(){
+            var newList= [];
+            index = 0;
+            $scope.lists.forEach(function(entry){
+                var obj = {
+                    id:entry.id,
+                    period:entry.period
+                };
+                newList[index] = obj;
+                index++;
+            });
+            app.post('/submitSchedule', newList).success(function(response){
+                //serverside
+            });
+        };
     };
+    $scope.test = function(){
+        console.log(AppFactory.getId());
+    };
+};
+
+controllers.ScheduleController = function(){
+
 };

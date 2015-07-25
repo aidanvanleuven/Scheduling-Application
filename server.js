@@ -1,9 +1,11 @@
 var express = require('express');
 var _ = require('underscore');
 var app = express();
+var session = require('express-session');
 var mongojs = require('mongojs');
 var bodyParser = require('body-parser');
 var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var connection_string = 'admin:pSjDFeQTWQ4y@127.0.0.1:27018/nodejs';
@@ -16,11 +18,10 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
 }
 var db = mongojs(connection_string , ['users', 'masterlist']);
 
-
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 
-//User CRUD Operations
+//User CRUD Methods
 
 app.get('/users', function(req, res){
     db.users.find().sort({username : 1}, function(err, docs){
@@ -55,7 +56,7 @@ app.put('/users', function (req, res) {
     );
 });
 
-//Populate Dashboard
+//Dashboard Methods
 app.get('/data/users', function(req, res){
     db.users.count(function(err, doc){
         res.json(doc);
@@ -68,7 +69,7 @@ app.get('/data/entries', function(req, res){
     });
 });
 
-//Classes CRUD Ooperations
+//Classes CRUD Methods
 
 app.get('/masterlist', function(req, res){
     db.masterlist.find().sort({lastname: 1, classname: 1, trimester: 1}, function(err, docs){
@@ -104,7 +105,7 @@ app.put('/masterlist', function (req, res) {
     );
 });
 
-//App Operations
+//App Methods
 
 app.get('/getTeachers', function(req, res){
     db.masterlist.find({},{firstname:1,lastname:1}, function(err, doc){
@@ -130,6 +131,25 @@ app.post('/getEntry', function(req,res){
     });
 });
 
+app.post('submitSchedule', function(req,res){
+    //add schedule to user
+});
+
+//Login + Register Methods
+app.post('/login', function(req,res){
+    db.users.findOne({username: req.body.username, password:req.body.password}, {_id:1, admin:1}, function(err, doc){
+        res.json(doc);
+    });
+});
+
+app.post('/register', function(req,res){
+    console.log(req.body);
+    db.users.insert({username:req.body.username, password:req.body.password, firstname:req.body.firstname, admin:false}, function(err,doc){
+        res.json(doc);
+    });
+});
+
+//Initialize Server
 
 app.listen(server_port, server_ip_address, function(){
     console.log("Listening on " + server_ip_address + ", port " + server_port);
