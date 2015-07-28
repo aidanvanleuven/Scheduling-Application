@@ -1,4 +1,4 @@
-controllers.AuthController = function($scope, $http, $location, AppFactory){
+controllers.AuthController = function($scope, $http, $location, $cookies){
     $scope.login = {};
 
     $scope.loginClick = function(){
@@ -13,16 +13,16 @@ controllers.AuthController = function($scope, $http, $location, AppFactory){
 
     $scope.submitLogin = function(){
         $http.post('/login', $scope.login).success(function(response){
-            console.log(response);
             if (response === null){
                 $scope.error = "Incorrect username or password.";
             }
             else {
-                AppFactory.storeId(response._id);
                 if (response.admin === false){
+                    $cookies.put('userId', response._id);
                     $location.path('/app');
                 }
                 if (response.admin === true){
+                    $cookies.put('userId', response._id);
                     $location.path('/admin');
                 }
             }

@@ -131,8 +131,14 @@ app.post('/getEntry', function(req,res){
     });
 });
 
-app.post('submitSchedule', function(req,res){
-    //add schedule to user
+app.post('/submitSchedule', function(req,res){
+    console.log(req.body.teacherclasses);
+    db.users.findAndModify({
+        query: {_id: mongojs.ObjectId(req.body.userId[0].userId)},
+        update: {
+            $set:{teacherclasses: [req.body.teacherclasses]}
+        }
+    });
 });
 
 //Login + Register Methods

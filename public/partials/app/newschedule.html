@@ -1,6 +1,17 @@
 <div class="container" id="newScheduleDiv">
     <h1>Create a Schedule</h1>
     <br>
+    <div class="form-inline">
+        <div class="form-group">
+            <label style="margin-right:20px;">Trimester:</label>
+            <select class="form-control input-sm" ng-change="something()" ng-model="input.trimester">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+        </div>
+    </div>
+    <br><br>
     <table class="table table-condensed table-hover">
         <thead>
             <tr>
@@ -36,18 +47,19 @@
 
         <div class="form-group">
             <label>Period:</label>
-            <select class="form-control" ng-model="input.period">
+            <label>{{ input.period }}</label>
+            <!-- <select class="form-control" ng-model="input.period">
                <option selected="selected">1</option>
                <option>2</option>
                <option>3</option>
                <option>4</option>
                <option>5</option>
                <option>6</option>
-            </select>
+            </select> -->
         </div>
         <br>
         <div class="pull-right">
-            <button class="btn btn-primary" type="submit" ng-click="submitClick()">Submit</button>
+            <button class="btn btn-primary" type="submit" ng-hide="hideSubmit" ng-click="submitClick()">Submit</button>
             &nbsp;
             <button class="btn btn-primary" type="button" ng-hide="hideDone" ng-click="doneClick()">Done</button>
         </div>

@@ -5,9 +5,9 @@ myApp.factory('AppFactory', function(){
 
         i: 0,
 
-        storeId: function(_id){
-                userId = _id;
-                return "Success!";
+        storeId: function(response){
+            userId = response._id;
+            return userId;
         },
 
         getId: function(){
@@ -17,20 +17,24 @@ myApp.factory('AppFactory', function(){
     };
 });
 
-controllers.NewScheduleController = function($scope, $http, AppFactory, $rootScope){
+controllers.NewScheduleController = function($scope, $http, AppFactory, $rootScope, $cookies){
     $scope.init = function(){
+        $scope.input = {};
+        $scope.input.period = 1;
         $scope.lists = AppFactory.lists;
         $scope.tDisabled=true;
         $scope.cDisabled=true;
         $scope.hideDone=true;
+        $scope.hideSubmit=false;
         $http.get('/getTeachers').success(function(response){
-            $scope.tDisabled=false;
             $scope.teachers = response;
-            $scope.input = {};
             $scope.lists = [];
-            $scope.input.trimester = 1;
+            //$scope.input.trimester = 1;
         });
+    };
 
+    $scope.something = function(){
+        $scope.tDisabled=false;
     };
 
     $scope.init();
@@ -45,6 +49,7 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $rootSco
     };
     $scope.lists = [];
     $scope.submitClick = function(){
+
         $http.post('/getEntry', $scope.input).success(function(response){
             var object = {
                 period: $scope.input.period,
@@ -55,29 +60,39 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $rootSco
             };
             $scope.lists[AppFactory.i] = object;
             AppFactory.i++;
+            $scope.input.period++;
             if ($scope.lists.length == 6){
+                $scope.input.period = "-";
                 $scope.hideDone=false;
+                $scope.hideSubmit=true;
             }
         });
 
         $scope.doneClick = function(){
-            var newList= [];
+            var teachClassObj = {};
+            teachClassObj.teacherclasses = [];
+            teachClassObj.userId = [];
             index = 0;
             $scope.lists.forEach(function(entry){
                 var obj = {
                     id:entry.id,
                     period:entry.period
                 };
-                newList[index] = obj;
+                teachClassObj.teacherclasses[index] = obj;
                 index++;
             });
-            app.post('/submitSchedule', newList).success(function(response){
-                //serverside
+            teachClassObj.userId[0] = {
+                userId: $cookies.get('userId')
+            };
+            console.log(teachClassObj);
+            $http.post('/submitSchedule', teachClassObj).success(function(response){
+                console.log(response);
             });
         };
     };
-    $scope.test = function(){
-        console.log(AppFactory.getId());
+    $scope.getUser = function(){
+        $scope.userToken = AppFactory.getId;
+        console.log("Hello!");
     };
 };
 

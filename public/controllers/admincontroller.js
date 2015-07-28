@@ -16,9 +16,14 @@ myApp.factory('factory', ['$http', '$q', function($http, $q){
 }]);
 
 
-controllers.NavController = function ($scope, $location){
+controllers.NavController = function ($scope, $location, $cookies){
     $scope.isActive = function (viewLocation) {
         return viewLocation === $location.url();
+    };
+
+    $scope.logOutClick = function(){
+        $cookies.remove('userId');
+        $location.path('/landing');
     };
 };
 
