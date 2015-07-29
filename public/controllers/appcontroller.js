@@ -17,10 +17,8 @@ myApp.factory('AppFactory', function(){
     };
 });
 
-controllers.NewScheduleController = function($scope, $http, AppFactory, $rootScope, $cookies){
+controllers.NewScheduleController = function($scope, $http, AppFactory, $cookies){
     $scope.init = function(){
-        $scope.input = {};
-        $scope.input.period = 1;
         $scope.lists = AppFactory.lists;
         $scope.tDisabled=true;
         $scope.cDisabled=true;
@@ -33,8 +31,17 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $rootSco
         });
     };
 
-    $scope.something = function(){
+    $scope.trimesterChange = function(){
         $scope.tDisabled=false;
+        $scope.input = {};
+        $scope.lists = [];
+        $scope.hideDone = true;
+        $scope.hideSubmit = false;
+        $scope.input.period = 1;
+        $scope.input.teacher = "";
+        $scope.input.class = "";
+        $scope.index = 0;
+        $scope.input.trimester = parseInt($scope.trimester, 10);
     };
 
     $scope.init();
@@ -49,23 +56,29 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $rootSco
     };
     $scope.lists = [];
     $scope.submitClick = function(){
-
         $http.post('/getEntry', $scope.input).success(function(response){
+            console.log(response);
             var object = {
                 period: $scope.input.period,
                 teacher: response[0].lastname + ", " + response[0].firstname,
                 class: response[0].classname,
-                room: response[0].room,
-                id: response[0]._id
+                id: response[0]._id,
+                room:response[0].room,
+                firstname: response[0].firstname,
+                lastname: response[0].lastname,
+                trimester: response[0].trimester
             };
-            $scope.lists[AppFactory.i] = object;
-            AppFactory.i++;
+            $scope.lists[$scope.index] = object;
+            $scope.index++;
             $scope.input.period++;
             if ($scope.lists.length == 6){
                 $scope.input.period = "-";
                 $scope.hideDone=false;
                 $scope.hideSubmit=true;
             }
+            $scope.input.teacher = "";
+            $scope.input.class = "";
+            console.log($scope.lists);
         });
 
         $scope.doneClick = function(){
@@ -76,7 +89,12 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $rootSco
             $scope.lists.forEach(function(entry){
                 var obj = {
                     id:entry.id,
-                    period:entry.period
+                    period:entry.period,
+                    firstname: entry.firstname,
+                    lastname: entry.lastname,
+                    room: entry.room,
+                    class:entry.class,
+                    trimester: entry.trimester
                 };
                 teachClassObj.teacherclasses[index] = obj;
                 index++;
@@ -87,6 +105,7 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $rootSco
             console.log(teachClassObj);
             $http.post('/submitSchedule', teachClassObj).success(function(response){
                 console.log(response);
+
             });
         };
     };
@@ -96,6 +115,15 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $rootSco
     };
 };
 
-controllers.ScheduleController = function(){
+controllers.ScheduleController = function($scope, $http, $cookies){
+    $scope.init = function(){
+        var user = {};
+        user = {id: $cookies.get('userId')};
+        console.log(user);
+        $http.post('/getSchedules', user).success(function(response){
+            $scope.schedules = response;
+        });
+    };
 
+    $scope.init();
 };

@@ -116,6 +116,17 @@ app.get('/getTeachers', function(req, res){
     });
 });
 
+app.post('/getSchedules', function(req,res){
+    db.users.find({_id: mongojs.ObjectId(req.body.id)}, function(err,doc){
+
+        var uniqueList = _.uniq(doc[0].teacherclasses, function(item,key,trimester){
+            return item.trimester;
+        });
+        console.log(uniqueList);
+        res.json(uniqueList);
+    });
+});
+
 app.post('/getClasses', function(req,res){
     db.masterlist.find({firstname: req.body.teacher.firstname, lastname:req.body.teacher.lastname, trimester:req.body.trimester},{classname:1}, function(err,doc){
         var uniqueList = _.uniq(doc, function(item, key, classname){
@@ -132,12 +143,14 @@ app.post('/getEntry', function(req,res){
 });
 
 app.post('/submitSchedule', function(req,res){
-    console.log(req.body.teacherclasses);
+    console.log(req.body);
     db.users.findAndModify({
         query: {_id: mongojs.ObjectId(req.body.userId[0].userId)},
         update: {
-            $set:{teacherclasses: [req.body.teacherclasses]}
+            $push:{teacherclasses:{$each: req.body.teacherclasses}}
         }
+    }, function(err, doc){
+        res.json(doc);
     });
 });
 

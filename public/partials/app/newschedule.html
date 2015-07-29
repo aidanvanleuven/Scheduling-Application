@@ -4,7 +4,7 @@
     <div class="form-inline">
         <div class="form-group">
             <label style="margin-right:20px;">Trimester:</label>
-            <select class="form-control input-sm" ng-change="something()" ng-model="input.trimester">
+            <select class="form-control input-sm" ng-change="trimesterChange()" ng-model="trimester">
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -18,7 +18,6 @@
                 <th>Teacher:</th>
                 <th>Class:</th>
                 <th>Period:</th>
-                <th>Room:</th>
             </tr>
         </thead>
 
@@ -27,7 +26,6 @@
                 <td>{{ list.teacher }}</td>
                 <td>{{ list.class }}</td>
                 <td>{{ list.period }}</td>
-                <td>{{ list.room }}</td>
             </tr>
         </tbody>
     </table>
