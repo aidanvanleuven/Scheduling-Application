@@ -118,6 +118,12 @@ app.get('/getTeachers', function(req, res){
 
 app.post('/getSchedules', function(req,res){
     db.users.find({_id: mongojs.ObjectId(req.body.id)}, function(err,doc){
+        res.json(doc[0].teacherclasses);
+    });
+});
+
+app.post('/getTrimesters', function(req,res){
+    db.users.find({_id: mongojs.ObjectId(req.body.id)}, function(err,doc){
 
         var uniqueList = _.uniq(doc[0].teacherclasses, function(item,key,trimester){
             return item.trimester;

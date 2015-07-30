@@ -119,11 +119,33 @@ controllers.ScheduleController = function($scope, $http, $cookies){
     $scope.init = function(){
         var user = {};
         user = {id: $cookies.get('userId')};
-        console.log(user);
-        $http.post('/getSchedules', user).success(function(response){
+        $http.post('/getTrimesters', user).success(function(response){
             $scope.schedules = response;
+        });
+
+        $http.post('/getSchedules', user).success(function(response){
+            $scope.allSchedules = response;
         });
     };
 
     $scope.init();
+
+    $scope.trimesterClicked = function(trimester){
+        $scope.showTable=true;
+        list = [];
+        var i =0;
+        $.each($scope.allSchedules, function(index, value){
+            if (value.trimester == trimester){
+                list[i] = {
+                    teacher: value.lastname + ", " + value.firstname,
+                    class: value.class,
+                    period:value.period,
+                    room:value.room
+                };
+                i++;
+                return true;
+            }
+        });
+        $scope.lists = list;
+    };
 };
