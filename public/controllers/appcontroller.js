@@ -115,7 +115,7 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $cookies
 
 controllers.ScheduleController = function($scope, $http, $cookies){
     $scope.init = function(){
-        $scope.showtable=false;
+        $scope.showTable=false;
         var user = {};
         user = {id: $cookies.get('userId')};
         $http.post('/getTrimesters', user).success(function(response){
