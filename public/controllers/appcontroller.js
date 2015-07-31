@@ -27,7 +27,9 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $cookies
         $http.get('/getTeachers').success(function(response){
             $scope.teachers = response;
             $scope.lists = [];
-            //$scope.input.trimester = 1;
+            $.each($scope.teachers, function(key, value) {
+                console.log(value.lastname + ", " + value.firstname);
+            });
         });
     };
 
@@ -148,9 +150,6 @@ controllers.ScheduleController = function($scope, $http, $cookies){
                     room:value.room
                 };
                 i++;
-                if (i > 6){
-                    $scope.caret = ">";
-                }
                 return true;
             }
         });

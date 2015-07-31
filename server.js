@@ -110,7 +110,7 @@ app.put('/masterlist', function (req, res) {
 app.get('/getTeachers', function(req, res){
     db.masterlist.find({},{firstname:1,lastname:1}, function(err, doc){
         var uniqueList = _.uniq(doc, function(item, key, firstname){
-            return item.firstname;
+            return item.lastname;
         });
         res.json(uniqueList);
     });
