@@ -1,14 +1,10 @@
         html, body {
             min-height:100%;
-            position: relative;
+/*            position: relative;*/
         }
 
         #landingdiv {
             background: url(/images/blurry.jpg) no-repeat center center fixed;
-/*            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;*/
             width:100%;
             min-height:100%;
             padding-top:30px;
@@ -22,7 +18,7 @@
 
         /* Override B3 .panel adding a subtly transparent background */
         .panel {
-            background-color: rgba(255, 255, 255, 0.7);
+            background-color: rgba(255, 255, 255, 0.4);
         }
 
         .margin-base-vertical {

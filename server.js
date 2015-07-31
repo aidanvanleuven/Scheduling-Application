@@ -116,6 +116,26 @@ app.get('/getTeachers', function(req, res){
     });
 });
 
+app.post('/deleteSchedule', function(req,res){
+    db.users.find({_id:mongojs.ObjectId(req.body.user)}, function(err,doc){
+        var newArray = [];
+        for(var i=0;i<doc[0].teacherclasses.length;i++){
+            var schedules = doc[0].teacherclasses[i];
+            if (schedules.trimester !== req.body.trimester){
+                newArray.push(schedules);
+            }
+
+        }
+        console.log(newArray);
+        db.users.findAndModify({
+            query: {_id: mongojs.ObjectId(req.body.user)},
+            update:{$set:{teacherclasses:newArray}}
+        }, function (err,doc){
+            res.json(doc);
+        });
+    });
+});
+
 app.post('/getSchedules', function(req,res){
     db.users.find({_id: mongojs.ObjectId(req.body.id)}, function(err,doc){
         res.json(doc[0].teacherclasses);
@@ -124,12 +144,15 @@ app.post('/getSchedules', function(req,res){
 
 app.post('/getTrimesters', function(req,res){
     db.users.find({_id: mongojs.ObjectId(req.body.id)}, function(err,doc){
-
-        var uniqueList = _.uniq(doc[0].teacherclasses, function(item,key,trimester){
-            return item.trimester;
-        });
-        console.log(uniqueList);
-        res.json(uniqueList);
+        if (doc.length !== 0){
+            var uniqueList = _.uniq(doc[0].teacherclasses, function(item,key,trimester){
+                return item.trimester;
+            });
+            res.json(uniqueList);
+        }
+        else{
+            res = undefined;
+        }
     });
 });
 
@@ -149,7 +172,6 @@ app.post('/getEntry', function(req,res){
 });
 
 app.post('/submitSchedule', function(req,res){
-    console.log(req.body);
     db.users.findAndModify({
         query: {_id: mongojs.ObjectId(req.body.userId[0].userId)},
         update: {

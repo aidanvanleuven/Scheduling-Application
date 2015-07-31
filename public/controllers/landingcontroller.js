@@ -32,7 +32,7 @@ controllers.AuthController = function($scope, $http, $location, $cookies){
     $scope.submitRegister = function(){
         $http.post('/register' , $scope.input).success(function(response){
             console.log(response);
-            //AppFactory.storeId(response);
+            $cookies.put('userId', response._id);
             $location.path('/app');
         });
     };

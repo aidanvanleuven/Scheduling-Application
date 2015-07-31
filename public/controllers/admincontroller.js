@@ -183,7 +183,7 @@ controllers.ClassCrudController = function($scope, $http, factory){
 
 };
 
-controllers.DashboardController = function($http, $scope, factory){
+controllers.DashboardController = function($http, $scope, factory, $state, $cookies){
     var init = function(){
 
          factory.dashUsers().success(function(response){
@@ -196,4 +196,13 @@ controllers.DashboardController = function($http, $scope, factory){
     };
 
     init();
+
+    $scope.toApp = function(){
+        $state.go('app');
+    };
+
+    $scope.logOut = function(){
+        $cookies.remove('userId');
+        $state.go('landing');
+    };
 };

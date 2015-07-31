@@ -1,36 +1,25 @@
 <div class="container">
     <h1>Dashboard</h1>
+    <div class="row buttons">
+        <button ng-click="logOut()" class="btn btn-primary pull-right">Log Out &nbsp;&nbsp;<span class="glyphicon glyphicon-log-out"></span></button>
+        <button ng-click="toApp()" class="btn btn-primary pull-right">Go to App&nbsp;&nbsp;<span class="glyphicon glyphicon-share-alt"></span></button>
+    </div>
+    <br>
     <div class="jumbotron">
-        <h2>Users</h2>
-        <br>
-        <div class="row">
-            <div class="col-xs-7">
-                <h5>Number of users: {{ users }}</h5>
-                <h5>New users today: {{  }}</h5>
-                <h5>Number of schedules created: </h5>
-                <h5>Number of something else: </h5>
-            </div>
-
-            <div class="col-xs-5">
-                <h5>Graph Here?</h5>
-            </div>
+        <div class="margin-mobile">
+            <h2>Users</h2>
+            <br>
+            <h5>Number of users: {{ users }}</h5>
+            <h5>Other data:</h5>
         </div>
     </div>
 
     <div class="jumbotron">
-        <h2>Data</h2>
-        <br>
-        <div class="row">
-            <div class="col-xs-7">
-                <h5>Number of entries: {{ data }}</h5>
-                <h5>New entries this month: </h5>
-                <h5>Number of schedules created: </h5>
-                <h5>Number of something else: </h5>
-            </div>
-
-            <div class="col-xs-5">
-                <h5>Graph Here?</h5>
-            </div>
+        <div class="margin-mobile">
+            <h2>Data</h2>
+            <br>
+            <h5>Number of entries: {{ data }}</h5>
+            <h5>Other data:</h5>
         </div>
     </div>
 </div>

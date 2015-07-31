@@ -17,7 +17,7 @@ myApp.factory('AppFactory', function(){
     };
 });
 
-controllers.NewScheduleController = function($scope, $http, AppFactory, $cookies){
+controllers.NewScheduleController = function($scope, $http, AppFactory, $cookies, $location){
     $scope.init = function(){
         $scope.lists = AppFactory.lists;
         $scope.tDisabled=true;
@@ -57,7 +57,6 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $cookies
     $scope.lists = [];
     $scope.submitClick = function(){
         $http.post('/getEntry', $scope.input).success(function(response){
-            console.log(response);
             var object = {
                 period: $scope.input.period,
                 teacher: response[0].lastname + ", " + response[0].firstname,
@@ -75,10 +74,10 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $cookies
                 $scope.input.period = "-";
                 $scope.hideDone=false;
                 $scope.hideSubmit=true;
+                $scope.doneClick();
             }
             $scope.input.teacher = "";
             $scope.input.class = "";
-            console.log($scope.lists);
         });
 
         $scope.doneClick = function(){
@@ -104,38 +103,44 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $cookies
             };
             console.log(teachClassObj);
             $http.post('/submitSchedule', teachClassObj).success(function(response){
-                console.log(response);
 
             });
+
+            $location.path('/app/schedules');
         };
-    };
-    $scope.getUser = function(){
-        $scope.userToken = AppFactory.getId;
-        console.log("Hello!");
     };
 };
 
 controllers.ScheduleController = function($scope, $http, $cookies){
     $scope.init = function(){
+        $scope.showtable=false;
         var user = {};
         user = {id: $cookies.get('userId')};
         $http.post('/getTrimesters', user).success(function(response){
+            console.log(response);
             $scope.schedules = response;
-        });
 
-        $http.post('/getSchedules', user).success(function(response){
-            $scope.allSchedules = response;
+            if ($scope.schedules.length !== 0){
+                $http.post('/getSchedules', user).success(function(response){
+                    $scope.allSchedules = response;
+                });
+            }
+            else{
+                $scope.error = "Create a new schedule to get started!";
+            }
+
         });
     };
 
     $scope.init();
 
     $scope.trimesterClicked = function(trimester){
+        $scope.selectedTri = trimester;
         $scope.showTable=true;
         list = [];
         var i =0;
         $.each($scope.allSchedules, function(index, value){
-            if (value.trimester == trimester){
+            if (value.trimester == $scope.selectedTri){
                 list[i] = {
                     teacher: value.lastname + ", " + value.firstname,
                     class: value.class,
@@ -143,9 +148,22 @@ controllers.ScheduleController = function($scope, $http, $cookies){
                     room:value.room
                 };
                 i++;
+                if (i > 6){
+                    $scope.caret = ">";
+                }
                 return true;
             }
         });
         $scope.lists = list;
+    };
+
+    $scope.deleteClick = function(){
+        var userTriObj = {};
+        userTriObj.user = $cookies.get('userId');
+        userTriObj.trimester = $scope.selectedTri;
+
+        $http.post('deleteSchedule', userTriObj).success(function(response){
+            $scope.init();
+        });
     };
 };
