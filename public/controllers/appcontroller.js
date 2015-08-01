@@ -25,14 +25,19 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $cookies
         $scope.cDisabled=true;
         $scope.hideDone=true;
         $scope.hideSubmit=false;
+        $scope.input = {};
+        $scope.input.teacher = "";
+        $scope.input.class = "";
         $http.get('/getTeachers').success(function(response){
             $scope.teachers = response;
         });
     };
 
+    $scope.init();
+
     $scope.trimesterChange = function(){
+        $scope.error = "";
         $scope.tDisabled=false;
-        $scope.input = {};
         $scope.hideDone = true;
         $scope.hideSubmit = false;
         $scope.input.period = 1;
@@ -42,9 +47,12 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $cookies
         $scope.input.trimester = parseInt($scope.trimester, 10);
     };
 
-    $scope.init();
+    $scope.classChange = function(){
+        $scope.error = "";
+    };
 
     $scope.teacherClicked = function(){
+        $scope.error = "";
         $http.post('getClasses', $scope.input).success(function(response){
             $scope.classes = response;
             $scope.cDisabled=false;
@@ -53,29 +61,37 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $cookies
 
     };
     $scope.submitClick = function(){
-        $http.post('/getEntry', $scope.input).success(function(response){
-            var object = {
-                period: $scope.input.period,
-                teacher: response[0].lastname + ", " + response[0].firstname,
-                class: response[0].classname,
-                id: response[0]._id,
-                room:response[0].room,
-                firstname: response[0].firstname,
-                lastname: response[0].lastname,
-                trimester: response[0].trimester
-            };
-            $scope.lists[$scope.index] = object;
-            $scope.index++;
-            $scope.input.period++;
-            if ($scope.input.period == 7){
-                $scope.input.period = "-";
-                $scope.hideDone=false;
-                $scope.hideSubmit=true;
-                $scope.doneClick();
-            }
-            $scope.input.teacher = "";
-            $scope.input.class = "";
-        });
+        console.log(angular.isDefined($scope.trimester));
+        console.log(angular.isDefined($scope.input.class));
+        if($scope.input.teacher === "" || $scope.input.class === "" || angular.isDefined($scope.trimester) === false){
+            $scope.error = "Please select a trimester, teacher, and class.";
+        } else {
+            $http.post('/getEntry', $scope.input).success(function(response){
+                var object = {
+                    period: $scope.input.period,
+                    teacher: response[0].lastname + ", " + response[0].firstname,
+                    class: response[0].classname,
+                    id: response[0]._id,
+                    room:response[0].room,
+                    firstname: response[0].firstname,
+                    lastname: response[0].lastname,
+                    trimester: response[0].trimester
+                };
+                $scope.lists[$scope.index] = object;
+                $scope.index++;
+                $scope.input.period++;
+                if ($scope.input.period == 7){
+                    $scope.input.period = "-";
+                    $scope.hideDone=false;
+                    $scope.hideSubmit=true;
+                    $scope.doneClick();
+                }
+                $scope.input.teacher = "";
+                $scope.input.class = "";
+            });
+        }
+    };
+
 
         $scope.doneClick = function(){
             var teachClassObj = {};
@@ -105,7 +121,6 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $cookies
 
             $location.path('/app/schedules');
         };
-    };
 };
 
 controllers.ScheduleController = function($scope, $http, $cookies){
