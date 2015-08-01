@@ -15,17 +15,17 @@
     <table class="table table-condensed table-hover">
         <thead>
             <tr>
+                <th>Period:</th>
                 <th>Teacher:</th>
                 <th>Class:</th>
-                <th>Period:</th>
             </tr>
         </thead>
 
         <tbody>
             <tr ng-repeat="list in lists | orderBy: list.period">
+                <td>{{ list.period }}</td>
                 <td>{{ list.teacher }}</td>
                 <td>{{ list.class }}</td>
-                <td>{{ list.period }}</td>
             </tr>
         </tbody>
     </table>
@@ -33,33 +33,30 @@
     <br>
 
     <form>
-        <div class="form-group">
-            <label>Teacher:</label>
-            <select class="form-control" ng-disabled="tDisabled" ng-model="input.teacher" ng-options="teacher.lastname + ', ' + teacher.firstname for teacher in teachers" ng-change="teacherClicked()"></select>
+        <div class="form-group row">
+            <div class="col-lg-10">
+                <label>Teacher:</label>
+                <select class="form-control" ng-disabled="tDisabled" ng-model="input.teacher" ng-options="teacher.lastname + ', ' + teacher.firstname for teacher in teachers" ng-change="teacherClicked()"></select>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>Class:</label>
-            <select class="form-control" ng-disabled="cDisabled" ng-options="class.classname for class in classes" ng-model="input.class"></select>
+        <div class="form-group row">
+            <div class="col-lg-10">
+                <label>Class:</label>
+                <select class="form-control" ng-disabled="cDisabled" ng-options="class.classname for class in classes" ng-model="input.class"></select>
+            </div>
         </div>
+        <br>
 
-        <div class="form-group">
-            <label>Period:</label>
-            <label>{{ input.period }}</label>
-            <!-- <select class="form-control" ng-model="input.period">
-               <option selected="selected">1</option>
-               <option>2</option>
-               <option>3</option>
-               <option>4</option>
-               <option>5</option>
-               <option>6</option>
-            </select> -->
+        <div class="form-group row">
+            <div class="col-lg-10">
+                <label>Period:</label>
+                <label>{{ input.period }}</label>
+            </div>
         </div>
         <br>
         <div class="pull-right">
             <button class="btn btn-primary" type="submit" ng-hide="hideSubmit" ng-click="submitClick()">Submit</button>
-            &nbsp;
-            <button class="btn btn-primary" type="button" ng-hide="hideDone" ng-click="doneClick()">Done</button>
         </div>
         <br>
     </form>

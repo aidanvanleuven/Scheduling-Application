@@ -19,24 +19,20 @@ myApp.factory('AppFactory', function(){
 
 controllers.NewScheduleController = function($scope, $http, AppFactory, $cookies, $location){
     $scope.init = function(){
-        $scope.lists = AppFactory.lists;
+        $scope.lists = [{period:1},{period:2},{period:3},{period:4},{period:5},{period:6}];
+        console.log($scope.lists);
         $scope.tDisabled=true;
         $scope.cDisabled=true;
         $scope.hideDone=true;
         $scope.hideSubmit=false;
         $http.get('/getTeachers').success(function(response){
             $scope.teachers = response;
-            $scope.lists = [];
-            $.each($scope.teachers, function(key, value) {
-                console.log(value.lastname + ", " + value.firstname);
-            });
         });
     };
 
     $scope.trimesterChange = function(){
         $scope.tDisabled=false;
         $scope.input = {};
-        $scope.lists = [];
         $scope.hideDone = true;
         $scope.hideSubmit = false;
         $scope.input.period = 1;
@@ -56,7 +52,6 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $cookies
         });
 
     };
-    $scope.lists = [];
     $scope.submitClick = function(){
         $http.post('/getEntry', $scope.input).success(function(response){
             var object = {
@@ -72,7 +67,7 @@ controllers.NewScheduleController = function($scope, $http, AppFactory, $cookies
             $scope.lists[$scope.index] = object;
             $scope.index++;
             $scope.input.period++;
-            if ($scope.lists.length == 6){
+            if ($scope.input.period == 7){
                 $scope.input.period = "-";
                 $scope.hideDone=false;
                 $scope.hideSubmit=true;
