@@ -23,12 +23,19 @@
                 </thead>
 
                 <tbody>
-                    <tr ng-repeat="list in lists">
+                    <tr ng-repeat-start="list in lists">
                         <td>{{ list.teacher }}</td>
                         <td>{{ list.class }}</td>
                         <td>{{ list.period }}</td>
                         <td>{{ list.room }}</td>
                     </tr>
+                    <tr ng-repeat-end ng-if="$index == 5 && lists.length == 12">
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
                 </tbody>
             </table>
         <br>

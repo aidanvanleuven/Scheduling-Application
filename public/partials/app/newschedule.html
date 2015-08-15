@@ -34,14 +34,14 @@
 
     <form>
         <div class="form-group row">
-            <div class="col-lg-10">
+            <div class="col-lg-10 col-lg-offset-1">
                 <label>Teacher:</label>
                 <select class="form-control" ng-disabled="tDisabled" ng-model="input.teacher" ng-options="teacher.lastname + ', ' + teacher.firstname for teacher in teachers | orderBy:'lastname' " ng-change="teacherClicked()"></select>
             </div>
         </div>
 
         <div class="form-group row">
-            <div class="col-lg-10">
+            <div class="col-lg-10 col-lg-offset-1">
                 <label>Class:</label>
                 <select class="form-control" ng-change="classChange()" ng-disabled="cDisabled" ng-options="class.classname for class in classes" ng-model="input.class"></select>
             </div>
@@ -49,7 +49,7 @@
         <br>
 
         <div class="form-group row">
-            <div class="col-lg-10">
+            <div class="col-lg-10 col-lg-offset-1">
                 <label>Period:</label>
                 <label>{{ input.period }}</label>
                 <br><br>
