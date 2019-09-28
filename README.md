@@ -1,4 +1,4 @@
-#Skyline Scheduling Application
+# Skyline Scheduling Application
 A MEAN Stack based application used for building schedules at Skyline.
 
 * Bootstrap based responsive design
